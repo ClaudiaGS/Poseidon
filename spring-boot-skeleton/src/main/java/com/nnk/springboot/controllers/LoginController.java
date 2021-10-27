@@ -13,14 +13,12 @@ public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @GetMapping("login")
-    public ModelAndView login() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("login");
-        return mav;
-    }
-
+//
+//    @GetMapping("/login")
+//    public String login() {
+//
+//        return "login";
+//    }
     @GetMapping("secure/article-details")
     public ModelAndView getAllUserArticles() {
         ModelAndView mav = new ModelAndView();
@@ -37,4 +35,5 @@ public class LoginController {
         mav.setViewName("403");
         return mav;
     }
+ 
 }
