@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8"/>
+	<title>Home</title>
+	<link rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+</head>
+<style>
+	body{
+    	background-color: gray;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+
+    }
+    .container{
+    	width:80%;
+        padding-top:20%;
+        padding-bottom:40%;
+    	display:flex;
+        flex-direction:column;
+        background-color: #FDFEFE;
+        align-items:center;
+        justify-content:center;
+
+
+    }
+
+
+
+    </style>
+<body>
+<div class="container">
+
+
+
+	<div class="row">
+		<form action="#" th:action="@{/bidList/validate}" th:object="${bid}" method="post" class="form-horizontal" style="width: 100%">
+			<!--
+			TODO: Create a form to input the values of Bid, there are 2 buttons: Save data and Cancel to the list Bid
+			 -->
+			<div class="form-group">
+				<h2>Add New Bid</h2>
+			</div>
+
+			<div class="form-group">
+				<label for="account" class="col-sm-2 control-label">Account</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{account}" id="account" placeholder="Account" class="col-4">
+					<p class="text-danger" th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="type" class="col-sm-2 control-label">Type</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{type}" id="type" placeholder="Type" class="col-4">
+					<p class="text-danger" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="bidQuantity" class="col-sm-2 control-label">Bid Quantity</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{bidQuantity}" id="bidQuantity" placeholder="Bid quantity" class="col-4">
+					<p class="text-danger" th:if="${#fields.hasErrors('bidQuantity')}" th:errors="*{bidQuantity}"></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-12">
+					<button type="button" class="btn btn-danger" href="/bidList/list">Cancel</button>
+					<input class="btn btn-primary btn-sm" type="submit" value="Add Bidlist">
+				</div>
+			</div>
+
+		</form>
+		</form>
+	</div>
+
+</div>
+</body>
+</html>
