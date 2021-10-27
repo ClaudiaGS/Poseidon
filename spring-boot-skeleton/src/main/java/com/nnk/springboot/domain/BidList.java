@@ -2,6 +2,7 @@ package com.nnk.springboot.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
@@ -9,12 +10,14 @@ import java.sql.Timestamp;
 public class BidList {
     // TODO: Map columns in data table BIDLIST with corresponding java fields
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="BidListId")
     private Integer BidListId;
-    @NotBlank
+    @NotBlank(message = "account is mandatory")
     private String account;
-    
+    @NotBlank(message = "type is mandatory")
     private String type;
+    @NotNull(message = "bidQuantity is mandatory")
     private Double bidQuantity;
     private Double askQuantity;
     private Double bid;

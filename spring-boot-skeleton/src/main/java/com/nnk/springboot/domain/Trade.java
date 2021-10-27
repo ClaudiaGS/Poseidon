@@ -1,6 +1,8 @@
 package com.nnk.springboot.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 
@@ -9,11 +11,20 @@ import java.sql.Timestamp;
 public class Trade {
     // TODO: Map columns in data table TRADE with corresponding java fields
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="TradeId")
     private Integer tradeId;
+    
+    @NotBlank(message = "account is mandatory")
     private String account;
+    
+    @NotBlank(message = "Type is mandatory")
     private String type;
+    
+    @NotNull(message = "bidQuantity is mandatory")
     private Double buyQuantity;
+    
+    
     private Double sellQuantity;
     private Double buyPrice;
     private Double sellPrice;
