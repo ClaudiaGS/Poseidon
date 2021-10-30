@@ -1,6 +1,8 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.services.interfaces.IRatingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,28 +16,38 @@ import javax.validation.Valid;
 @Controller
 public class RatingController {
     // TODO: Inject Rating service
+    @Autowired
+    IRatingService ratingService;
 
     @RequestMapping("/rating/list")
     public String home(Model model)
     {
         // TODO: find all Rating, add to model
+        model.addAttribute("ratings", ratingService.getRatingList());
         return "rating/list";
     }
 
     @GetMapping("/rating/add")
-    public String addRatingForm(Rating rating) {
+    public String addRatingForm(Rating rating, Model model) {
+        model.addAttribute("rating", rating);
         return "rating/add";
     }
 
     @PostMapping("/rating/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
         // TODO: check data valid and save to db, after saving return Rating list
-        return "rating/add";
+        if(result.hasErrors()){
+            return "rating/add";
+        }
+        ratingService.createRating(rating);
+        model.addAttribute("ratings", ratingService.getRatingList());
+        return "redirect:/rating/list";
     }
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         // TODO: get Rating by Id and to model then show to the form
+        model.addAttribute("rating", ratingService.getRating(id));
         return "rating/update";
     }
 
@@ -43,12 +55,19 @@ public class RatingController {
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
                              BindingResult result, Model model) {
         // TODO: check required fields, if valid call service to update Rating and return Rating list
+        if(result.hasErrors()){
+            return "rating/update";
+        }
+        ratingService.updateRating(rating);
+        model.addAttribute("ratings",ratingService.getRatingList());
         return "redirect:/rating/list";
     }
 
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
         // TODO: Find Rating by Id and delete the Rating, return to Rating list
+        ratingService.deleteRating(id);
+        model.addAttribute("ratings", ratingService.getRatingList());
         return "redirect:/rating/list";
     }
 }

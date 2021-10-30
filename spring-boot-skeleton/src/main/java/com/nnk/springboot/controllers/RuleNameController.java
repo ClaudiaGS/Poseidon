@@ -16,64 +16,60 @@ import javax.validation.Valid;
 @Controller
 public class RuleNameController {
     // TODO: Inject RuleName service
-
+    
     @Autowired
     IRuleNameService ruleNameService;
     
     @RequestMapping("/ruleName/list")
-    public String home(Model model)
-    {
+    public String home(Model model) {
         // TODO: find all RuleName, add to model
-        model.addAttribute("rules",ruleNameService.getRuleNameList());
+        model.addAttribute("rules", ruleNameService.getRuleNameList());
         return "ruleName/list";
     }
-
+    
     @GetMapping("/ruleName/add")
-    public String addRuleForm(RuleName bid) {
+    public String addRuleForm(RuleName ruleName, Model model) {
+        model.addAttribute("ruleName", ruleName);
         return "ruleName/add";
     }
-
+    
     @PostMapping("/ruleName/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
         // TODO: check data valid and save to db, after saving return RuleName list
-        String returnedVue=" ";
-        if(result.hasErrors()){
-            returnedVue="/ruleName/list";
-        }else{
-            returnedVue="/ruleName/add";
-            ruleNameService.updateRuleName(ruleName);
-            model.addAttribute("rules", ruleNameService.getRuleNameList());
+        
+        if (result.hasErrors()) {
+            return "ruleName/add";
         }
-        return returnedVue;
+        ruleNameService.updateRuleName(ruleName);
+        model.addAttribute("rules", ruleNameService.getRuleNameList());
+        return "redirect:/ruleName/list";
     }
-
+    
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         // TODO: get RuleName by Id and to model then show to the form
-        model.addAttribute("ruleName",ruleNameService.getRuleName(id));
+        model.addAttribute("ruleName", ruleNameService.getRuleName(id));
         return "ruleName/update";
     }
-
+    
     @PostMapping("/ruleName/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
-                             BindingResult result, Model model) {
+                                 BindingResult result, Model model) {
         // TODO: check required fields, if valid call service to update RuleName and return RuleName list
-        String returnedView=" ";
-        if(result.hasErrors()){
-            returnedView="ruleName/list";
-        }else{
-            ruleNameService.updateRuleName(ruleName);
-            returnedView="redirect:/ruleName/list";
-            model.addAttribute("rules", ruleNameService.getRuleNameList());
+        
+        if (result.hasErrors()) {
+            return "ruleName/update";
         }
-        return returnedView;
+        ruleNameService.updateRuleName(ruleName);
+        model.addAttribute("rules", ruleNameService.getRuleNameList());
+        return "redirect:/ruleName/list";
     }
-
+    
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
         // TODO: Find RuleName by Id and delete the RuleName, return to Rule list
         ruleNameService.deleteRuleName(id);
-        model.addAttribute("rules",ruleNameService.getRuleNameList());
+        model.addAttribute("rules", ruleNameService.getRuleNameList());
         return "redirect:/ruleName/list";
     }
 }

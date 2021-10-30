@@ -27,7 +27,8 @@ public class CurveController {
     }
     
     @GetMapping("/curvePoint/add")
-    public String addBidForm(CurvePoint bid) {
+    public String addBidForm(CurvePoint curvePoint, Model model) {
+        model.addAttribute("curvePoint", curvePoint);
         return "curvePoint/add";
     }
     
@@ -36,10 +37,11 @@ public class CurveController {
         // TODO: check data valid and save to db, after saving return Curve list
         String returnedVue=" ";
         if(result.hasErrors()){
-            returnedVue="/curvePoint/add";
+            returnedVue="curvePoint/add";
         }else{
             curvePointService.createCurvePoint(curvePoint);
-            returnedVue="curvePoint/list";
+            model.addAttribute("curvePointList", curvePointService.getCurvePointList());
+            returnedVue="redirect:/curvePoint/list";
         }
         return returnedVue;
     }
@@ -55,15 +57,14 @@ public class CurveController {
     public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
                             BindingResult result, Model model) {
         // TODO: check required fields, if valid call service to update Curve and return Curve list
-        String returnedVue=" ";
+       
         if(result.hasErrors()){
-            returnedVue="/curvePoint/update/id";
-        }else{
+            return "curvePoint/update";
+        }
             curvePointService.updateCurvePoint(curvePoint);
             model.addAttribute("curvePointList",curvePointService.getCurvePointList());
-            returnedVue="redirect:/curvePoint/list";
-        }
-        return returnedVue;
+            return "redirect:/curvePoint/list";
+        
     }
     
     @GetMapping("/curvePoint/delete/{id}")
