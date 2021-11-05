@@ -1,84 +1,127 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<style>
-	body{
-    	background-color: gray;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
 
-    }
-	.loginContent{
-    	width:80%;
-        padding-top:20%;
-        padding-bottom:40%;
-    	display:flex;
-        flex-direction:column;
-        background-color: #FDFEFE;
-        align-items:center;
-        justify-content:center;
-
-
-    }
-
-    input{
-    	background-color:#D4F6FE;
-    }
-    .fields{
-    	display:flex;
-        flex-direction:row;
-        align-items:center;
-    }
-    .textInputLabel{
-    	display:flex;
-        flex-direction:column;
-        align-items:left;
-    }
-    .textInput{
-    	display:flex;
-        flex-direction:column;
-        align-items:left;
-    }
-
-
-</style>
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>home</title>
+<!--    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/static/bootstrap/css/bootstrap.min.css}">-->
+
+
+    <link  th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+
+
 </head>
-<body>
-<div class="loginContent">
 
-    <div class="formContent">
-        <div class="action">
-            <h3>Login with Username and Password</h3>
+<body style="background-color: rgb(255,254,254);">
+    <p><strong>Login with Username and Password</strong></p>
+    <form th:action="@{/login}" method="post">
+        <div class="container" style="width: 300px;">
+            <label style="margin: 0px 0px 8px;">Username&nbsp;</label>
+            <input type="text" name="username" style="margin-left: 0px;">
         </div>
-        <form th:action="@{/login}" method="post">
-            <div class="fields">
-                <div class="textInputLabel">
-                    <label> User: </label>
-                    <label> Password:</label>
-                </div>
-                <div class="textInput">
-                    <input type="text" name="username" />
-                    <input type="password" name="password" />
-                </div>
-            </div>
-
-
-
-            <div>
-                <button type="submit" value="Login">Login</button>
-            </div>
-        </form>
-        <div class="errors">
-            <div th:if="${param.error}">Invalid username and password.</div>
-            <div th:if="${param.logout}">You have been logged out.</div>
+        <div class="container" style="width: 300px;">
+            <label style="margin: 0px 0px 8px;">Password&nbsp;&nbsp;</label>
+            <input type="password" name="password" style="margin-left: 0px;">
+            <button class="btn btn-primary" type="submit" style="width: 80px;background-color: rgb(169,169,169);">Login</button>
         </div>
+    </form>
+            <div class="errors">
+                <div th:if="${param.error}">Invalid username and password.</div>
+                <div th:if="${param.logout}">You have been logged out.</div>
+            </div>
+<!--<script src="../static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>-->
+<!--<script src="../static/bootstrap/js/bootstrap.min.js" th:src="@{/static/bootstrap/js/bootstrap.min.js}"></script>-->
 
-    </div>
 
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
 
-</div>
 </body>
+
 </html>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
+<!--<style>-->
+<!--	body{-->
+<!--    	background-color: gray;-->
+<!--        display:flex;-->
+<!--        flex-direction:column;-->
+<!--        align-items:center;-->
+<!--        justify-content:center;-->
+
+<!--    }-->
+<!--	.loginContent{-->
+<!--    	width:80%;-->
+<!--        padding-top:20%;-->
+<!--        padding-bottom:40%;-->
+<!--    	display:flex;-->
+<!--        flex-direction:column;-->
+<!--        background-color: #FDFEFE;-->
+<!--        align-items:center;-->
+<!--        justify-content:center;-->
+
+
+<!--    }-->
+
+<!--    input{-->
+<!--    	background-color:#D4F6FE;-->
+<!--    }-->
+<!--    .fields{-->
+<!--    	display:flex;-->
+<!--        flex-direction:row;-->
+<!--        align-items:center;-->
+<!--    }-->
+<!--    .textInputLabel{-->
+<!--    	display:flex;-->
+<!--        flex-direction:column;-->
+<!--        align-items:left;-->
+<!--    }-->
+<!--    .textInput{-->
+<!--    	display:flex;-->
+<!--        flex-direction:column;-->
+<!--        align-items:left;-->
+<!--    }-->
+
+
+<!--</style>-->
+<!--<head>-->
+<!--    <title>Spring Security Example</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="loginContent">-->
+
+<!--    <div class="formContent">-->
+<!--        <div class="action">-->
+<!--            <h3>Login with Username and Password</h3>-->
+<!--        </div>-->
+<!--        <form th:action="@{/login}" method="post">-->
+<!--            <div class="fields">-->
+<!--                <div class="textInputLabel">-->
+<!--                    <label> User: </label>-->
+<!--                    <label> Password:</label>-->
+<!--                </div>-->
+<!--                <div class="textInput">-->
+<!--                    <input type="text" name="username" />-->
+<!--                    <input type="password" name="password" />-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+
+<!--            <div>-->
+<!--                <button type="submit" value="Login">Login</button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--        <div class="errors">-->
+<!--            <div th:if="${param.error}">Invalid username and password.</div>-->
+<!--            <div th:if="${param.logout}">You have been logged out.</div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+
+
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

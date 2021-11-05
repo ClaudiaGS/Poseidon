@@ -11,9 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
+
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsService userDetailsService;
@@ -38,7 +40,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
-                .antMatchers("/user/**").permitAll()//hasRole("ADMIN")
+                .antMatchers("/user/**").hasRole("ADMIN")
+                //.antMatchers("/resources/**").permitAll()
+               .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -46,15 +51,26 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout().logoutUrl("/app-logout")
-                .permitAll();
+                .permitAll()
+              //  .and().exceptionHandling().accessDeniedPage("/error");
+                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler());
                 
                 
 //                .and()
 //                .logout().logoutUrl("/app-logout")
 //                .and().csrf().disable();
     }
+//
+    
+
     
     
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
+
+//
 }
 
 
