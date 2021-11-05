@@ -9,4 +9,13 @@ body {
   justify-content: center;
   align-items: center;
 }
+h3{
+    text-align: center;
+    margin-top:200px;
+}
+#containerLogout{
+    display: flex;
+      flex-direction:row;
+      justify-content: center;
+}
 

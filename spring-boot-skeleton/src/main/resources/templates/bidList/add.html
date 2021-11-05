@@ -5,31 +5,9 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Home</title>
-	<link rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 </head>
-<style>
-	body{
-    	background-color: gray;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
 
-    }
-    .container{
-    	width:80%;
-        padding-top:20%;
-        padding-bottom:40%;
-    	display:flex;
-        flex-direction:column;
-        background-color: #FDFEFE;
-        align-items:center;
-        justify-content:center;
-    }
-
-
-
-    </style>
 <body>
 <div class="container">
 
@@ -68,7 +46,7 @@
 
 			<div class="form-group">
 				<div class="col-sm-12">
-					<button type="button" class="btn btn-danger" href="/bidList/list">Cancel</button>
+					<a class="btn btn-danger btn-sm" href="/bidList/list">Cancel</a>
 					<input class="btn btn-primary btn-sm" type="submit" value="Add Bidlist">
 				</div>
 			</div>
