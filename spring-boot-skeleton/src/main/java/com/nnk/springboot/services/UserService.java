@@ -28,7 +28,7 @@ public class UserService implements IUserService {
     public Iterable<User>getUsers(){
         Iterable<User>userIterable;
         userIterable=userRepository.findAll();
-        logger.info("User list is: "+userIterable);
+        logger.info("User list is: "+asJsonString(userIterable));
         return userIterable;
     }
     

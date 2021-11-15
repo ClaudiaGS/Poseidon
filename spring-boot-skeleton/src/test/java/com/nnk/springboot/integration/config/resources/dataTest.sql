@@ -106,5 +106,5 @@ insert into CurvePoint(CurveId, Term, Value) values('2','22','222');
 insert into Rating(MoodysRating,SandPRating,FitchRating, orderNumber) values('moodys1','sandPR1','fitch1','1');
 insert into Rating(MoodysRating,SandPRating,FitchRating, orderNumber) values('moodys2','sandPR2','fitch2','2');
 
-insert into RuleName(Description, json, template, sqlStr, sqlPart) values('description1','json1','template1','sql1','sqlPart1');
-insert into RuleName(Description, json, template, sqlStr, sqlPart) values('description2','json2','template2','sql2','sqlPart2');
+insert into RuleName(Name,Description, json, template, sqlStr, sqlPart) values('name1','description1','json1','template1','sql1','sqlPart1');
+insert into RuleName(Name,Description, json, template, sqlStr, sqlPart) values('name2','description2','json2','template2','sql2','sqlPart2');
