@@ -1,5 +1,6 @@
 package com.nnk.springboot.security;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,15 +9,16 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
+@EnableEncryptableProperties
 
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SpringSecurityConfig {
+//        extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsService userDetailsService;
     
@@ -29,19 +31,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         
     }
     
-    @Override
+//    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
     
-    @Override
+//    @Override
     protected void configure(HttpSecurity http) throws Exception {
         
         http
                 .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/user/**").hasRole("ADMIN")
-                //.antMatchers("/resources/**").permitAll()
+              
                .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .anyRequest().authenticated()
@@ -50,27 +52,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .permitAll()
                 .and()
+                .oauth2Login()
+                .permitAll()
+                .and()
                 .logout().logoutUrl("/app-logout")
                 .permitAll()
-              //  .and().exceptionHandling().accessDeniedPage("/error");
                 .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler());
-                
-                
-//                .and()
-//                .logout().logoutUrl("/app-logout")
-//                .and().csrf().disable();
     }
-//
-    
-
-    
+   
     
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
-
-//
 }
 
 

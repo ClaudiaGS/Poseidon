@@ -4,6 +4,11 @@ import com.nnk.springboot.domain.Trade;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ *
+ * CRUD implementation for Trade object
+ *
+ */
 @Repository
 public interface TradeRepository extends JpaRepository<Trade, Integer> {
 }

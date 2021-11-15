@@ -16,7 +16,7 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/authorize")
+    @GetMapping("/login")
     public String login() {
 
         return "login";
@@ -45,4 +45,6 @@ public class LoginController {
 //
 //    return "/error/accessDenied";
 //}
+
+
 }
