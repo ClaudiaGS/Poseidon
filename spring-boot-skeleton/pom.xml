@@ -19,9 +19,9 @@
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
 		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-			<version>2.5.1.RELEASE</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+			<version>2.3.3.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -81,6 +81,18 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.passay</groupId>
+			<artifactId>passay</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>31.0.1-jre</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -93,6 +105,135 @@
 				<groupId>com.github.ulisesbocchio</groupId>
 				<artifactId>jasypt-maven-plugin</artifactId>
 				<version>3.0.3</version>
+			</plugin>
+
+
+			<plugin>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.8.7</version>
+			<configuration>
+				<excludes>
+					<exclude>**/config/*</exclude>
+					<exclude>**/domain/*</exclude>
+					<exclude>**/security/*</exclude>
+				</excludes>
+			</configuration>
+			<executions>
+				<execution>
+					<id>before-unit-test-execution</id>
+					<goals>
+						<goal>prepare-agent</goal>
+					</goals>
+
+					<configuration>
+						<destFile>${project.build.directory}/jacoco-output/jacoco-unit-tests.exec</destFile>
+						<propertyName>surefire.jacoco.args</propertyName>
+
+					</configuration>
+				</execution>
+				<execution>
+					<id>after-unit-test-execution</id>
+					<phase>test</phase>
+					<goals>
+						<goal>report</goal>
+					</goals>
+					<configuration>
+						<dataFile>${project.build.directory}/jacoco-output/jacoco-unit-tests.exec</dataFile>
+						<outputDirectory>${project.build.directory}/jacoco-unit-test-coverage-report
+						</outputDirectory>
+
+					</configuration>
+				</execution>
+				<execution>
+					<id>before-integration-test-execution</id>
+					<phase>pre-integration-test</phase>
+					<goals>
+						<goal>prepare-agent</goal>
+					</goals>
+					<configuration>
+						<destFile>${project.build.directory}/jacoco-output/jacoco-integration-tests.exec</destFile>
+						<propertyName>failsafe.jacoco.args</propertyName>
+
+					</configuration>
+
+				</execution>
+
+				<execution>
+					<id>after-integration-test-execution</id>
+					<phase>post-integration-test</phase>
+					<goals>
+						<goal>report</goal>
+					</goals>
+					<configuration>
+						<dataFile>${project.build.directory}/jacoco-output/jacoco-integration-tests.exec</dataFile>
+						<outputDirectory>${project.build.directory}/jacoco-integration-test-coverage-report
+						</outputDirectory>
+					</configuration>
+				</execution>
+
+
+				<execution>
+					<id>merge-results</id>
+					<phase>verify</phase>
+					<goals>
+						<goal>merge</goal>
+					</goals>
+					<configuration>
+						<fileSets>
+							<fileSet>
+								<directory>${project.build.directory}/jacoco-output</directory>
+								<includes>
+									<include>jacoco-integration-tests.exec</include>
+									<include>jacoco-unit-tests.exec</include>
+								</includes>
+							</fileSet>
+						</fileSets>
+						<destFile>${project.build.directory}/jacoco-merged-reports/merged.exec</destFile>
+
+					</configuration>
+				</execution>
+				<execution>
+					<id>post-merge-report</id>
+					<phase>verify</phase>
+					<goals>
+						<goal>report</goal>
+					</goals>
+					<configuration>
+						<dataFile>${project.build.directory}/jacoco-merged-reports/merged.exec</dataFile>
+						<outputDirectory>${project.build.directory}/jacoco-merged-reports</outputDirectory>
+					</configuration>
+				</execution>
+
+			</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+				<configuration>
+					<argLine>@{surefire.jacoco.args}</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.22.2</version>
+				<configuration>
+					<argLine>@{failsafe.jacoco.args}</argLine>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+
+
+				</executions>
+
+
 			</plugin>
 		</plugins>
 	</build>

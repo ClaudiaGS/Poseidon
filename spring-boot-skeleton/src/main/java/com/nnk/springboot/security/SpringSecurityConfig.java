@@ -9,6 +9,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -17,8 +18,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @EnableWebSecurity
 @EnableEncryptableProperties
 
-public class SpringSecurityConfig {
-//        extends WebSecurityConfigurerAdapter {
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsService userDetailsService;
     
@@ -31,40 +31,61 @@ public class SpringSecurityConfig {
         
     }
     
-//    @Override
+    //    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
     
-//    @Override
+    //    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        
         http
                 .authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/user/**").hasRole("ADMIN")
-              
-               .antMatchers("/css/**").permitAll()
+                .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/user/**").hasRole("ADMIN")
+                .antMatchers("/admin/*").hasRole("ADMIN")
+                .antMatchers("/*").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
                 .permitAll()
+                .defaultSuccessUrl("/bidList/list", false)
                 .and()
-                .oauth2Login()
-                .permitAll()
+                .oauth2Login().defaultSuccessUrl("/bidList/list")
                 .and()
+//                .logout(logoutConfigurer -> logoutConfigurer
+//                        .logoutSuccessUrl("/login").permitAll()
+//                );
+
+//        http
+//                .authorizeRequests()
+//                //.antMatchers("/resources/**").permitAll()
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/user/**").hasRole("ADMIN")
+//                .antMatchers("/css/**").permitAll()
+//                .antMatchers("/js/**").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//
+//                .oauth2Login().defaultSuccessUrl("/bidList/list",false)
+////                .formLogin()
+////                .loginPage("/login")
+////                .permitAll()
+////                .defaultSuccessUrl("/bidList/list", false)
+//                .and()
                 .logout().logoutUrl("/app-logout")
+                .logoutSuccessUrl("/")
                 .permitAll()
                 .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
-   
+    
     
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
+
 }
 
 

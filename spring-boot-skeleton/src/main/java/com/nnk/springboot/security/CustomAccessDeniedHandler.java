@@ -14,15 +14,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
-
+    
     private static final Logger LOG = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
-
+/**
+        * @see org.springframework.security.web.access.AccessDeniedHandler#handle(HttpServletRequest, HttpServletResponse, AccessDeniedException) 
+ * **/
+    
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-
+        
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
-
+            
             LOG.info("User '" + authentication.getName() +
                     "' attempted to access the URL: " +
                     request.getRequestURI());
