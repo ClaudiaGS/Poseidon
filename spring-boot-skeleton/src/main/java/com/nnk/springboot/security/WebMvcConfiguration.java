@@ -11,6 +11,10 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
        registry.addViewController("/login").setViewName("login");
     }
+    /**
+     *
+     * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurer#addResourceHandlers(ResourceHandlerRegistry)
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");

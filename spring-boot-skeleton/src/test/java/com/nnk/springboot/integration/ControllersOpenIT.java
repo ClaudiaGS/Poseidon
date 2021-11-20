@@ -45,15 +45,3 @@ public class ControllersOpenIT {
 }
 
 
-//        @Autowired
-//        private TestRestTemplate template;
-//
-//        // ... other methods
-//
-//        @Test
-//        public void givenAuthRequestOnPrivateService_shouldSucceedWith200() throws Exception {
-//            ResponseEntity<String> result = template.withBasicAuth("user1", "password1")
-//                    .getForEntity("/bidList/list", String.class);
-//            assertEquals(HttpStatus.OK, result.getStatusCode());
-//        }
-//    }

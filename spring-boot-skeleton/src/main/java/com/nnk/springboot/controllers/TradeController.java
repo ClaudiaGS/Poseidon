@@ -15,13 +15,13 @@ import javax.validation.Valid;
 
 @Controller
 public class TradeController {
-    // TODO: Inject Trade service
+    
     @Autowired
     ITradeService tradeService;
     
     @RequestMapping("/trade/list")
     public String home(Model model) {
-        // TODO: find all Trade, add to model
+       
         model.addAttribute("trades", tradeService.getTrades());
         return "trade/list";
     }
@@ -33,7 +33,7 @@ public class TradeController {
     
     @PostMapping("/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return Trade list
+       
         if (!result.hasErrors()) {
             
             tradeService.createTrade(trade);
@@ -45,8 +45,7 @@ public class TradeController {
     
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Trade by Id and to model then show to the form
-     
+        
         model.addAttribute("trade", tradeService.getTrade(id));
         return "trade/update";
     }
@@ -54,7 +53,7 @@ public class TradeController {
     @PostMapping("/trade/update/{id}")
     public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
                               BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Trade and return Trade list
+        
         String returnedVue=" ";
         if (result.hasErrors()) {
             returnedVue="redirect:/trade/update/{id}";
@@ -68,7 +67,7 @@ public class TradeController {
     
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Trade by Id and delete the Trade, return to Trade list
+       
         tradeService.deleteTrade(id);
         model.addAttribute("tradeList",tradeService.getTrades());
         return "redirect:/trade/list";

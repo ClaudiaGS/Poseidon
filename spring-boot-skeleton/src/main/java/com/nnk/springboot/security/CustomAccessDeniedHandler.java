@@ -16,10 +16,10 @@ import java.io.IOException;
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     
     private static final Logger LOG = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
-/**
-        * @see org.springframework.security.web.access.AccessDeniedHandler#handle(HttpServletRequest, HttpServletResponse, AccessDeniedException) 
- * **/
     
+    /**
+     * @see org.springframework.security.web.access.AccessDeniedHandler#handle(HttpServletRequest, HttpServletResponse, AccessDeniedException)
+     */
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         

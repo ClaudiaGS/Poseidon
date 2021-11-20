@@ -31,12 +31,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         
     }
     
-    //    @Override
+    /**
+     *
+     * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(AuthenticationManagerBuilder)
+     */
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
-    
-    //    @Override
+    /**
+     *
+     * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(HttpSecurity)
+     */
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
@@ -54,26 +61,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login().defaultSuccessUrl("/bidList/list")
                 .and()
-//                .logout(logoutConfigurer -> logoutConfigurer
-//                        .logoutSuccessUrl("/login").permitAll()
-//                );
-
-//        http
-//                .authorizeRequests()
-//                //.antMatchers("/resources/**").permitAll()
-//                .antMatchers("/").permitAll()
-//                .antMatchers("/user/**").hasRole("ADMIN")
-//                .antMatchers("/css/**").permitAll()
-//                .antMatchers("/js/**").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//
-//                .oauth2Login().defaultSuccessUrl("/bidList/list",false)
-////                .formLogin()
-////                .loginPage("/login")
-////                .permitAll()
-////                .defaultSuccessUrl("/bidList/list", false)
-//                .and()
                 .logout().logoutUrl("/app-logout")
                 .logoutSuccessUrl("/")
                 .permitAll()

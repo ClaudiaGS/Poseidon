@@ -5,15 +5,24 @@ import org.passay.*;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.lang.annotation.Annotation;
 import java.util.Arrays;
 
 
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
     
+    /**
+     *
+     * @see javax.validation.ConstraintValidator#initialize(Annotation)
+     */
     @Override
     public void initialize(ValidPassword arg0) {
     }
     
+    /**
+     *
+     * @see javax.validation.ConstraintValidator#isValid(Object, ConstraintValidatorContext)
+     */
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
