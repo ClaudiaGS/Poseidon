@@ -1,6 +1,4 @@
-package com.nnk.springboot.repositories;
-
-import com.nnk.springboot.security.PasswordConstraintValidator;
+package com.nnk.springboot.security.constraint;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

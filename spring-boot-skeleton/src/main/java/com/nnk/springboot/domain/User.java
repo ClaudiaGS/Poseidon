@@ -1,6 +1,6 @@
 package com.nnk.springboot.domain;
 
-import com.nnk.springboot.repositories.ValidPassword;
+import com.nnk.springboot.security.constraint.ValidPassword;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

@@ -1,7 +1,6 @@
-package com.nnk.springboot.security;
+package com.nnk.springboot.security.constraint;
 
 import com.google.common.base.Joiner;
-import com.nnk.springboot.repositories.ValidPassword;
 import org.passay.*;
 
 import javax.validation.ConstraintValidator;
