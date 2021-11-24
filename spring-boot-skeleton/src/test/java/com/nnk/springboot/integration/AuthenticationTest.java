@@ -27,10 +27,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AuthenticationTest {
     @Autowired
     private MockMvc mvc;
-    
+
     @Autowired
     private WebApplicationContext context;
-    
+
     @Before
     public void setup() {
         mvc = MockMvcBuilders
@@ -38,18 +38,18 @@ public class AuthenticationTest {
                 .apply(springSecurity())
                 .build();
     }
-    
+
     @Test
     public void shouldReturnDefaultMessage() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/login")).andDo(print()).andExpect(status().isOk());
     }
-    
+
     @Test
     public void userLoginTest() throws Exception {
-        
+
         mvc.perform(formLogin("/login").user("user1").password("password1")).andExpect(authenticated());
     }
-    
+
     @Test
     public void userLoginFailed() throws Exception {
         mvc.perform(formLogin("/login").user("user1").password("wrongpassword")).andExpect(unauthenticated());
